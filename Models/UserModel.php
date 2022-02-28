@@ -4,19 +4,55 @@ class UserModel extends BaseModel
 {
     const TABLE = 'users';
 
-    public function getAll()
+    /**
+     * Lấy danh sách
+     */
+    public function get($select = ['*'])
     {
-        return __METHOD__;
+        return $this->getAll(self::TABLE, $select);
     }
 
+    /**
+     * Lấy danh sách
+     */
+    public function join($table1, $table2, $column1, $column2)
+    {
+        return $this->innerJoin($table1, $table2, $column1, $column2);
+    }
+
+    /**
+     * Tìm theo id
+     */
     public function findById($id)
     {
-        return __METHOD__;
+        return $this->find(self::TABLE, $id);
     }
 
-    public function delete()
+    // id của phòng ban
+    public function findWhere($column , $id)
     {
-        return __METHOD__;
+        return $this->findByColumn(self::TABLE, $column, $id);
+    }
+
+    /**
+     * Thêm mới
+     */
+    public function insert($data)
+    {
+        $this->create(self::TABLE, $data);
+    }
+
+    /**
+     * Sửa
+     */
+    public function update($id, $data = [])
+    {
+        $this->updateData(self::TABLE, $id, $data);
+    }
+
+    public function delete($id)
+    {
+        $this->destroy(self::TABLE, $id);
     }
 }
 

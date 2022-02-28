@@ -12,40 +12,67 @@ class UserController extends BaseController
 
     public function index()
     {
-        echo $this->UserModel->getAll();
-
-        $hello = 'Hello, World!';
-        $this->view('users.index', ['hello' => $hello]);
+        $students = $this->UserModel->join('users', 'departments', 'departmentid', 'id');
+        $this->loadModel('DepartmentModel');
+        $this->DepartmentModel = new DepartmentModel;
+        $departments = $this->DepartmentModel->get();
+        $this->view('users.index', ['students' => $students, 'departments' => $departments]);
     }
 
     public function create()
     {
-        echo __METHOD__;
+        
     }
 
     public function store()
     {
-        echo __METHOD__;
+        $data = [
+            'employeecode' => $_POST['employeecode'],
+            'fullname' => $_POST['fullname'],
+            'password' => md5($_POST['password']),
+            'departmentid' => $_POST['departmentid'],
+            'role' => $_POST['role']
+        ];
+        $this->UserModel->insert($data);
+        $this->index();
     }
 
     public function show()
     {
-        echo __METHOD__;
+        $id = $_GET['id'];
+        $students = $this->UserModel->findById($id);
     }
 
     public function edit()
     {
-        echo __METHOD__;
+        $id = $_GET['id'];
+        $data = $this->UserModel->findById($id);
+        $this->loadModel('DepartmentModel');
+        $this->DepartmentModel = new DepartmentModel;
+        $departments = $this->DepartmentModel->get();
+        $newArray = array('student' => $data, 'departments' => $departments);
+        $this->view('users.edit', $newArray);
     }
 
     public function update()
     {
-        echo __METHOD__;
+        $id = $_GET['id'];
+        $data = [
+            'employeecode' => $_POST['employeecode'],
+            'fullname' => $_POST['fullname'],
+            'password' => md5($_POST['password']),
+            'departmentid' => $_POST['departmentid'],
+            'role' => $_POST['role']
+        ];
+        $this->UserModel->update($id, $data);
+        $this->index();
     }
 
     public function destroy()
     {
-        echo __METHOD__;
+        $id = $_GET['id'];
+        $this->UserModel->delete($id);
+        $this->index();
     }
 
 }
