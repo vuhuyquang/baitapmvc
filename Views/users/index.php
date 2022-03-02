@@ -241,7 +241,7 @@
 		</tr>
 		<?php foreach ($students as $key => $student) :?>
 		<tr>
-			<td><?php echo($student['id']) ?></td>
+			<td><?php echo($key+1) ?></td>
 			<td><?php echo $student['employeecode'] ?></td>
 			<td><?php echo $student['fullname'] ?></td>
 			<td><?php echo $student['departmentname'] ?></td>

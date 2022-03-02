@@ -7,5 +7,9 @@ $controller = ucfirst((strtolower($_REQUEST['controller']) ?? 'Welcome') . 'Cont
 $action = $_REQUEST['action'] ?? 'index';
 
 require "./Controllers/${controller}.php";
+
 $controllerObject = new $controller;
 $controllerObject->$action();
+
+
+

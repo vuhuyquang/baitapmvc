@@ -42,7 +42,7 @@ class BaseModel extends Database
 
     public function findByColumn($table, $column, $id)
     {
-        $sql = "SELECT * FROM ${table} WHERE ${column} = ${id}";
+        $sql = "SELECT * FROM ${table} WHERE ${column} = '${id}'";
         $query = $this->_query($sql);
         return mysqli_fetch_assoc($query);
     }
