@@ -1,9 +1,11 @@
+
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
 	<title>Trang chủ</title>
         <link rel="icon" type="image/x-icon" href="https://tuyendung.rikkeisoft.com/favicon.ico">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <style type="text/css">
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Quicksand&display=swap');
 *
@@ -226,7 +228,6 @@
 			<th>STT</th>
 			<th>Mã phòng ban</th>
 			<th>Tên phòng ban</th>
-            <th>Danh sách nhân viên</th>
 			<th>Sửa</th>
 			<th>Xóa</th>
 		</tr>
@@ -235,12 +236,25 @@
 			echo "<td>". ($key+1) ."</td>";
 			echo "<td>". $department['departmentcode'] ."</td>";
 			echo "<td>". $department['departmentname'] ."</td>";
-            echo "<td><a href='index.php?controller=department&action=detail&id=".$department['id']."'>Danh sách nhân viên</a></td>";
 			echo "<td><a href='index.php?controller=department&action=edit&id=".$department['id']."'>Sửa</a></td>";
 			echo "<td><a href='index.php?controller=department&action=destroy&id=".$department['id']."'>Xóa</a></td>";
 		echo "</tr>";
 		} ?>
 	</table>
+	<nav aria-label="Page navigation example">
+	<ul class="pagination">
+		<li class="page-item"><a class="page-link" href="index.php?controller=department&pages=<?php if ($pages >= 2) {
+			$pages-1;
+			echo $pages;
+		} else {
+			echo $pages;
+		} ?>">Previous</a></li>
+		<?php for ($i=1; $i <= $pages; $i++) { ?>
+			<li class="page-item"><a class="page-link" href="index.php?controller=department&pages=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+		<?php } ?>
+		<li class="page-item"><a class="page-link" href="index.php?controller=department&pages=<?php echo $pages++; ?>">Next</a></li>
+	</ul>
+	</nav>
 
 	<div class="modal">
 		<div class="modal-container">

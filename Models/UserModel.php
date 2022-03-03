@@ -15,9 +15,14 @@ class UserModel extends BaseModel
     /**
      * Lấy danh sách
      */
-    public function join($table1, $table2, $column1, $column2)
+    public function join($table1, $table2, $column1, $column2, $pages)
+    {   
+        return $this->innerJoin($table1, $table2, $column1, $column2, $pages);
+    }
+
+    public function count()
     {
-        return $this->innerJoin($table1, $table2, $column1, $column2);
+        return $this->countItem(self::TABLE);
     }
 
     /**

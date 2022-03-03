@@ -1,9 +1,11 @@
+<?php session_start() ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
 	<title>Trang chủ</title>
         <link rel="icon" type="image/x-icon" href="https://tuyendung.rikkeisoft.com/favicon.ico">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <style type="text/css">
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Quicksand&display=swap');
 *
@@ -229,7 +231,9 @@
 <body>
 	<?php include('Views/layouts/header.php'); ?>
 	<div class="heading">DANH SÁCH NHÂN VIÊN</div>
-	<a class="js-add btn-them">Thêm mới khoa</a>
+	<?php if (isset($_SESSION['role']) && $_SESSION['role'] == 2) { ?>
+		<a class="js-add btn-them">Thêm mới khoa</a>
+	<?php } ?> 
 	<table>
 		<tr>
 			<th>STT</th>
@@ -245,8 +249,16 @@
 			<td><?php echo $student['employeecode'] ?></td>
 			<td><?php echo $student['fullname'] ?></td>
 			<td><?php echo $student['departmentname'] ?></td>
-			<td><a href="index.php?controller=user&action=edit&id=<?php echo $student['id'] ?>">Sửa</a></td>
-			<td><a href="index.php?controller=user&action=destroy&id=<?php echo $student['id'] ?>">Xóa</a></td>
+			<td><a href="index.php?controller=user&action=edit&id=<?php echo $student['id'] ?>">
+				<?php if (isset($_SESSION['role']) && $_SESSION['role'] == 2) { ?>
+					Sửa
+				<?php } ?>
+			</a></td>
+			<td><a href="index.php?controller=user&action=destroy&id=<?php echo $student['id'] ?>">
+			<?php if (isset($_SESSION['role']) && $_SESSION['role'] == 2) { ?>
+					Xóa
+				<?php } ?>
+			</a></td>
 		</tr>
 		<?php endforeach ?>
 	</table>
@@ -256,7 +268,7 @@
 			<div class="modal-close"><i class="ti-close"></i></div>
 			<header class="modal-header"><i class="ti-bag"></i>THÊM MỚI NHÂN VIÊN</header>
 			<div class="body">
-				<form action="index.php?controller=user&action=store" method="POST">
+				<form action="index.php?controller=user&action=store" method="POST" encytype="multipart/form-data">
 				<label for="code" class="modal-label"><i class="ti-menu-alt"></i>Mã nhân viên</label>
 				<input id="code" type="text" class="modal-input" name="employeecode" placeholder="Nhập mã nhân viên" required="" autocomplete="off">
 
@@ -278,11 +290,29 @@
 						<option value="1">Nhân viên</option>
 						<option value="2">Quản trị viên</option>
 				</select>
+
+				<label for="avatar" class="modal-label"><i class="ti-info"></i>Ảnh đại diện</label>
+				<input type="file" name="avatar">
 				<button class="modal-btn">THÊM<i class="ti-check"></i></button>
 				</form>
 			</div>
 		</div>
 	</div>
+
+	<nav aria-label="Page navigation example">
+	<ul class="pagination">
+		<li class="page-item"><a class="page-link" href="index.php?controller=user&pages=<?php if ($pagesPresent >= 2) {
+			$pagesPresent--;
+			echo $pagesPresent;
+		} else {
+			echo $pagesPresent;
+		} ?>">Previous</a></li>
+		<?php for ($i=1; $i <= $pages; $i++) { ?>
+			<li class="page-item"><a class="page-link" href="index.php?controller=user&pages=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+		<?php } ?>
+		<li class="page-item"><a class="page-link" href="index.php?controller=user&pages=<?php echo ($pagesPresent+1); ?>">Next</a></li>
+	</ul>
+	</nav>
 
 	<script type="text/javascript">
 		const btnthem = document.querySelector('.js-add');
@@ -304,3 +334,4 @@
 	</script>
 </body>
 </html>
+

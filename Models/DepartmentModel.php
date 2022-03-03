@@ -4,10 +4,15 @@ class DepartmentModel extends BaseModel
 {
     const TABLE = 'departments';
 
-    public function get($select = ['*'])
+    public function get($select = ['*'], $pages = null)
     {
-        return $department = $this->getAll(self::TABLE, $select);
+        return $department = $this->getAll(self::TABLE, $select, $pages);
     }
+
+    // public function all($select = ['*'])
+    // {
+    //     return $department = $this->getAll(self::TABLE, $select);
+    // }
 
     public function findById($id)
     {
@@ -27,6 +32,11 @@ class DepartmentModel extends BaseModel
     public function delete($id)
     {
         $this->destroy(self::TABLE, $id);
+    }
+
+    public function count()
+    {
+        return $this->countItem(self::TABLE);
     }
 }
 

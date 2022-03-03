@@ -9,10 +9,14 @@ class BaseModel extends Database
         $this->connect = $this->connect();
     }
 
-    public function getAll($table, $select = ['*'])
+    public function getAll($table, $select = ['*'], $pages = null)
     {
+        $row = 10;
+        $from = ($pages-1) * $row;
+
         $column = implode(',', $select);
-        $sql = "SELECT ${column} FROM ${table}";
+        $pages == null ? $sql = "SELECT ${column} FROM ${table}" : $sql = "SELECT ${column} FROM ${table} LIMIT ${from}, ${row}";
+        // $sql = "SELECT ${column} FROM ${table} LIMIT ${from}, ${row}";
         $query = $this->_query($sql);
         $data = [];
         while ($row = mysqli_fetch_assoc($query)) {
@@ -21,10 +25,22 @@ class BaseModel extends Database
         return $data;
     }
 
-    public function innerJoin($table1, $table2, $column1, $column2)
+    public function countItem($table)
     {
-        // $column = implode(',', $select);
-        $sql = "SELECT * FROM ${table2} INNER JOIN ${table1} ON ${table2}.${column2} = ${table1}.${column1}";
+        $sql = "SELECT COUNT(id) FROM ${table}";
+        $query = $this->_query($sql);
+        $data = [];
+        while ($row = mysqli_fetch_assoc($query)) {
+            array_push($data, $row);
+        }
+        return $data;
+    }
+
+    public function innerJoin($table1, $table2, $column1, $column2, $pages)
+    {   
+        $row = 3;
+        $from = ($pages-1) * $row;
+        $sql = "SELECT * FROM ${table2} INNER JOIN ${table1} ON ${table2}.${column2} = ${table1}.${column1}  LIMIT $from, $row";
         $query = $this->_query($sql);
         $data = [];
         while ($row = mysqli_fetch_assoc($query)) {

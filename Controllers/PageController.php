@@ -7,11 +7,15 @@ class PageController extends BaseController
     public function getlogin()
     {
         if (isset($_SESSION['roleName']) || isset($_SESSION['role'])) {
-            session_unset(); 
+            unset($_SESSION['roleName']);
+            unset($_SESSION['role']);
+            unset($_SESSION);
             session_destroy(); 
         }
         if (isset($_SESSION['roleName']) || isset($_SESSION['role'])) {
-            session_unset(); 
+            unset($_SESSION['roleName']);
+            unset($_SESSION['role']);
+            unset($_SESSION);
             session_destroy(); 
         }
         $this->view('home');
@@ -32,7 +36,7 @@ class PageController extends BaseController
         } elseif ($account != null && $account['password'] == $password && $account['role'] == '2') {
             session_start();
             $_SESSION['roleName'] = $employeecode;
-            $_SESSION['role'] = $employeecode;
+            $_SESSION['role'] = $account['role'];
             header('Location: http://localhost/baitapmvc/index.php?controller=user');
         } else {
             $this->getlogin();
