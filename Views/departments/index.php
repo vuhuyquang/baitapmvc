@@ -243,16 +243,10 @@
 	</table>
 	<nav aria-label="Page navigation example">
 	<ul class="pagination">
-		<li class="page-item"><a class="page-link" href="index.php?controller=department&pages=<?php if ($pages >= 2) {
-			$pages-1;
-			echo $pages;
-		} else {
-			echo $pages;
-		} ?>">Previous</a></li>
 		<?php for ($i=1; $i <= $pages; $i++) { ?>
 			<li class="page-item"><a class="page-link" href="index.php?controller=department&pages=<?php echo $i; ?>"><?php echo $i; ?></a></li>
 		<?php } ?>
-		<li class="page-item"><a class="page-link" href="index.php?controller=department&pages=<?php echo $pages++; ?>">Next</a></li>
+		
 	</ul>
 	</nav>
 

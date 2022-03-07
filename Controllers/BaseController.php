@@ -18,11 +18,6 @@ class BaseController
     {
         require (self::MODEL_FOLDER_NAME . '/' . $path . '.php');
     }
-
-    // protected function loadController($path)
-    // {
-    //     require (self::CONTROLLER_FOLDER_NAME . '/' . $path . '.php');
-    // }
 }
 
 ?>

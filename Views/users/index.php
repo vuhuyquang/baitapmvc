@@ -301,16 +301,11 @@
 
 	<nav aria-label="Page navigation example">
 	<ul class="pagination">
-		<li class="page-item"><a class="page-link" href="index.php?controller=user&pages=<?php if ($pagesPresent >= 2) {
-			$pagesPresent--;
-			echo $pagesPresent;
-		} else {
-			echo $pagesPresent;
-		} ?>">Previous</a></li>
+		
 		<?php for ($i=1; $i <= $pages; $i++) { ?>
 			<li class="page-item"><a class="page-link" href="index.php?controller=user&pages=<?php echo $i; ?>"><?php echo $i; ?></a></li>
 		<?php } ?>
-		<li class="page-item"><a class="page-link" href="index.php?controller=user&pages=<?php echo ($pagesPresent+1); ?>">Next</a></li>
+		
 	</ul>
 	</nav>
 
