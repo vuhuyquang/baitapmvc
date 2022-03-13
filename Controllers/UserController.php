@@ -1,17 +1,18 @@
 <?php
-
+include 'ImageResize.php';
 class UserController extends BaseController
 {
     private $UserModel;
+    use \Gumlet\ImageResize;
 
     public function __construct()
     {
         $this->loadModel('UserModel');
         $this->UserModel = new UserModel;
-        // session_start();
-        // if (empty($_SESSION['role']) && empty($_SESSION['roleName'])) {
-        //     header('Location: http://localhost/baitapmvc/index.php?controller=page&action=getlogin');
-        // }
+        session_start();
+        if (!isset($_SESSION['role']) && !isset($_SESSION['roleName'])) {
+            header('Location: http://localhost/baitapmvc/index.php?controller=page&action=getlogin');
+        }
     }
 
     public function index()
@@ -60,17 +61,28 @@ class UserController extends BaseController
 
     public function store()
     {
-        // if (isset($_FILES['avatar']) && $_FILES['avatar']['type'] == 'image/jpeg') {
-        //     move_uploaded_file($_FILES['avatar']['tmp_name'], $_FILES['avatar']['name']);
-        //     $file = $_FILES['avatar']['name'];
-        //     $this->resize_image($file, "300");
-        //     echo $file;
-        // }
+        if (isset($_FILES['avatar'])) {
+            $file = $_FILES['avatar'];
+            $fileName = $file['name'];
+            $fileTmp = $file['tmp_name'];
+            $fileSize = $file['size'];
+            $targetFile = 'Assets/uploads/'.$fileName;
+            $resizeImage = 'Assets/uploads/resize_'.$fileName;
+            if ($fileSize>0) {
+                if (move_uploaded_file($fileTmp, $targetFile)) {
+                    $image = new ImageResize($targetFile);
+                    $image->resize(300, 300);
+                    $image->save($resizeImage);
+                }
+            }  
+        }
+
         $data = [
             'employeecode' => $_POST['employeecode'],
             'fullname' => $_POST['fullname'],
             'password' => md5($_POST['password']),
             'departmentid' => $_POST['departmentid'],
+            'avatar' => $fileName,
             'role' => $_POST['role']
         ];
         $this->UserModel->insert($data);

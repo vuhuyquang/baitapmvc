@@ -7,7 +7,6 @@
         <link rel="icon" type="image/x-icon" href="https://tuyendung.rikkeisoft.com/favicon.ico">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <style type="text/css">
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Quicksand&display=swap');
 *
 {
 	margin: 0;
@@ -222,7 +221,9 @@
 <body>
 	<?php include('Views/layouts/header.php'); ?>
 	<div class="heading">DANH SÁCH PHÒNG BAN</div>
-	<a class="js-add btn-them">Thêm mới phòng ban</a>
+	<?php if (isset($_SESSION['role']) && $_SESSION['role'] == 2) { ?>
+	<a class="js-add btn-them">Thêm mới</a>
+	<?php } ?>
 	<table>
 		<tr>
 			<th>STT</th>
@@ -236,8 +237,16 @@
 			echo "<td>". ($key+1) ."</td>";
 			echo "<td>". $department['departmentcode'] ."</td>";
 			echo "<td>". $department['departmentname'] ."</td>";
-			echo "<td><a href='index.php?controller=department&action=edit&id=".$department['id']."'>Sửa</a></td>";
-			echo "<td><a href='index.php?controller=department&action=destroy&id=".$department['id']."'>Xóa</a></td>";
+			echo "<td>";
+			if (isset($_SESSION['role']) && $_SESSION['role'] == 2) {
+				echo "<a href='index.php?controller=department&action=edit&id=".$department['id']."'>Sửa</a>";
+			}
+			echo "</td>";
+			echo "<td>";
+			if (isset($_SESSION['role']) && $_SESSION['role'] == 2) {
+				echo "<a href='index.php?controller=department&action=destroy&id=".$department['id']."'>Xóa</a>";
+			}
+			echo "</td>";
 		echo "</tr>";
 		} ?>
 	</table>

@@ -6,18 +6,10 @@ class PageController extends BaseController
 
     public function getlogin()
     {
-        if (isset($_SESSION['roleName']) || isset($_SESSION['role'])) {
-            unset($_SESSION['roleName']);
-            unset($_SESSION['role']);
-            unset($_SESSION);
+        session_start();
+        if (isset($_SESSION)) {
             session_destroy(); 
-        }
-        if (isset($_SESSION['roleName']) || isset($_SESSION['role'])) {
-            unset($_SESSION['roleName']);
-            unset($_SESSION['role']);
-            unset($_SESSION);
-            session_destroy(); 
-        }
+        }   
         $this->view('home');
     }
 

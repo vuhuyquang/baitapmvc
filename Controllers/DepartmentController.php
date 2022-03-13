@@ -8,9 +8,10 @@ class DepartmentController extends BaseController
     {
         $this->loadModel('DepartmentModel');
         $this->DepartmentModel = new DepartmentModel;
-        // if (!isset($_SESSION['role']) && !isset($_SESSION['roleName'])) {
-        //     header('Location: http://localhost/baitapmvc/index.php?controller=page&action=getlogin');
-        // }
+        session_start();
+        if (!isset($_SESSION['role']) && !isset($_SESSION['roleName'])) {
+            header('Location: http://localhost/baitapmvc/index.php?controller=page&action=getlogin');
+        }
     }
 
     public function index()

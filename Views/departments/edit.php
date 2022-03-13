@@ -5,7 +5,6 @@
 	<title>Trang chủ</title>
         <link rel="icon" type="image/x-icon" href="https://tuyendung.rikkeisoft.com/favicon.ico">
         <style type="text/css">
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Quicksand&display=swap');
 *
 {
 	margin: 0;

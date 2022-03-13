@@ -1,4 +1,3 @@
-<?php session_start() ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +6,6 @@
         <link rel="icon" type="image/x-icon" href="https://tuyendung.rikkeisoft.com/favicon.ico">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <style type="text/css">
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Quicksand&display=swap');
 *
 {
 	margin: 0;
@@ -232,7 +230,7 @@
 	<?php include('Views/layouts/header.php'); ?>
 	<div class="heading">DANH SÁCH NHÂN VIÊN</div>
 	<?php if (isset($_SESSION['role']) && $_SESSION['role'] == 2) { ?>
-		<a class="js-add btn-them">Thêm mới khoa</a>
+		<a class="js-add btn-them">Thêm mới</a>
 	<?php } ?> 
 	<table>
 		<tr>
@@ -240,6 +238,7 @@
 			<th>Mã nhân viên</th>
 			<th>Tên nhân viên</th>
             <th>Phòng ban</th>
+			<th>Ảnh đại diện</th>
 			<th>Sửa</th>
 			<th>Xóa</th>
 		</tr>
@@ -249,6 +248,7 @@
 			<td><?php echo $student['employeecode'] ?></td>
 			<td><?php echo $student['fullname'] ?></td>
 			<td><?php echo $student['departmentname'] ?></td>
+			<td><img style="width: 30px; height: 30px;" src="Assets/uploads/<?php echo $student['avatar'] ?>" alt=""></td>
 			<td><a href="index.php?controller=user&action=edit&id=<?php echo $student['id'] ?>">
 				<?php if (isset($_SESSION['role']) && $_SESSION['role'] == 2) { ?>
 					Sửa
@@ -268,7 +268,7 @@
 			<div class="modal-close"><i class="ti-close"></i></div>
 			<header class="modal-header"><i class="ti-bag"></i>THÊM MỚI NHÂN VIÊN</header>
 			<div class="body">
-				<form action="index.php?controller=user&action=store" method="POST" encytype="multipart/form-data">
+				<form action="index.php?controller=user&action=store" method="POST" enctype="multipart/form-data">
 				<label for="code" class="modal-label"><i class="ti-menu-alt"></i>Mã nhân viên</label>
 				<input id="code" type="text" class="modal-input" name="employeecode" placeholder="Nhập mã nhân viên" required="" autocomplete="off">
 
